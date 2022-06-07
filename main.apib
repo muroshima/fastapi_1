@@ -1,0 +1,95 @@
+FORMAT: 1A
+
+# Group エラーハンドリングの基本
+### Response 401
+今回は存在しない。
+
+### Response 403
+今回は想定しない。
+
+### Response 500
+* エラー\
+{"error_code": 4003}
+
+
+# Group ユーザー関連
+
+## ユーザー一覧取得 [GET /users/]
+
+#### 処理概要
+ユーザーの一覧を取得する。通常のAPIであれば検索パラメータを付与して部分集団を返す事が可能だが、今回の課題ではその機能は省略し、全ユーザーを返すのみとする。
+
+
++ Request (application/json)
+
+    + Headers
+
+                Accept: application/json
+
+    + Body
+                なし
+
++ Response 200 (application/json)
+
+
+## ユーザー本登録 [POST /users/create]
+
+#### 処理概要
+ユーザーの登録処理を行う。
+
++ Request (application/json)
+
+    + Headers
+
+                Accept: application/json
+
+    + Attributes
+        + last_name: ''(string, required) - 姓
+        + first_name: ''(string, required) - 名
+        + kana_last_name: ''(string, required) - カナ姓
+        + kana_first_name: ''(string, required) - カナ名
+        + birthday_year: ''(number, required) - 誕生年
+        + birthday_month: ''(number, required) - 誕生月
+        + birthday_day: ''(number, required) - 誕生日
+        + gender: ''(number, required) - 性別(男:0, 女:1)
+        + marriage: ''(number) - 結婚有無(既婚:0, 未婚:1)
+        + phone_number: ''(string, required) - 携帯電話番号
+        + purpose: ''(number, required) - ご利用目的（生活費:0, 事業資金:1）
+        + yearly_salary: ''(number, required) - 年収
+        + desired_amount: ''(number, required) - 希望限度額
+
+        + postal_code: ''(string, required) - 郵便番号
+        + address: ''(string, required) - 市区町村
+        + block_number: ''(string, required) - 番地
+        + street: ''(string, required) - 建物名（任意）
+        + housing_type: ''(number, required) - お住まいの種類(賃貸・借家:1,持ち家(自己所有):4,持ち家(家族所有):6)
+        + rent: ''(number, required) - 家賃・住宅ローン負担額
+        + move_in_year: ''(number, required) - 入居年（西暦）
+        + living_alone: ''(number, required) - 同居内容(同居:0,別居:1)
+        + dependent_family: ''(number, required) - 扶養家族
+
+        + company_name: ''(string, required) - 勤務先名
+        + kana_company_name: ''(string, required) - カナ勤務先名
+        + phone_number1: ''(string, required) - 市外局番
+        + phone_number2: ''(string, required) - 市内局番
+        + phone_number3: ''(string, required) - 加入者番号
+        + business_type: ''(number) - 業種（卸売・小売・飲食店:8, 建設・不動産:3, 製造:2, 運輸・情報通信:7, 電力・ガス:23, 金融・保険:30, 農林・水産・鉱業:1, サービス・その他:25）
+        + company_size: ''(number) - 会社規模（公務員・郵政事業:1, 上場・準上場:2, 社員500人以上:3, 社員100人以上:4, 社員20人以上:6, 社員5人以上:7, 社員5人未満:8, 社員なし（単独）:9）
+        + employee_type: ''(number) - 雇用形態（正社員:1, 派遣社員:2, 正社員以外:4, パート・アルバイト:5, 社長・代表者:6）
+        + insurance_type: ''(number, required) - 保険証種別(社長選択時:0, 社保・共済・組合:1, 国保・家族名義の保険証:2, その他の保険:4, 未加入:5)
+        + pay_day: ''(number, required) - 給料日
+        + hire_date_year: ''(number, required) - 入社年
+        + other_work: ''(string, required) - その他のお仕事
+
+        + email: ''(string, required) - メールアドレス
+        + password_digest: ''(string, required) - 契約手続きパスワード
+
+
++ Response 200 (application/json)
+
+    + Headers
+
+                なし
+
+    + Attributes
+        + userId: 25 (number, required) - 登録が正常に完了した場合に、ユーザーのIDを返却する
